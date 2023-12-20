@@ -1,3 +1,5 @@
+import 'dart:convert';
+
 class Score{
   String username = "";
   int score = 0;
@@ -5,5 +7,7 @@ class Score{
       this.username = username;
       this.score = score;
   }
-
+  String toJson(){
+    return json.encode({'username': username, 'score':score});
+  }
 }

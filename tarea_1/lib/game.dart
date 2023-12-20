@@ -8,7 +8,7 @@ import 'package:tarea_1/choose.dart';
 
 
 class Game extends StatefulWidget {
-  String username = "";
+   String username = "";
   @override
   _GameState createState() => _GameState();
   
@@ -65,11 +65,18 @@ class _GameState extends State<Game> {
     });
     return shuffledImages;
   }
-
+  Future<void> loadUsername() async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    widget.username = prefs.getString('username') ?? "";
+  }
   @override  
   void initState() {
     super.initState();
     startTimerAndShuffleImages();
+    setState(() {
+      
+    });
+    
   }
   
   @override
@@ -77,7 +84,6 @@ class _GameState extends State<Game> {
     timer.cancel();
     super.dispose();
   }
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -89,7 +95,7 @@ class _GameState extends State<Game> {
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            Text("Recuerda memorizar estas imagenes ",style: TextStyle(fontWeight: FontWeight.bold,color: Colors.purple,fontSize: 25.0),textAlign: TextAlign.center),
+            Text( widget.username +  " recuerda memorizar estas imagenes ",style: const TextStyle(fontWeight: FontWeight.bold,color: Colors.purple,fontSize: 25.0),textAlign: TextAlign.center),
             SizedBox(height: 60),
             Image.asset('images/'+ shuffledImages[currentIndex].image,height: 400,width: 400),
           ],
