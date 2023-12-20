@@ -65,10 +65,10 @@ class _GameState extends State<Game> {
     });
     return shuffledImages;
   }
-  Future<void> loadUsername() async {
-    SharedPreferences prefs = await SharedPreferences.getInstance();
-    widget.username = prefs.getString('username') ?? "";
-  }
+  Future<String> loadUsername() async {
+  SharedPreferences prefs = await SharedPreferences.getInstance();
+  return prefs.getString('username') ?? "";
+}
   @override  
   void initState() {
     super.initState();
@@ -86,6 +86,7 @@ class _GameState extends State<Game> {
   }
   @override
   Widget build(BuildContext context) {
+    final userText = loadUsername();
     return Scaffold(
       appBar: AppBar(
         backgroundColor:Colors.purple,
@@ -95,7 +96,7 @@ class _GameState extends State<Game> {
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            Text( widget.username +  " recuerda memorizar estas imagenes ",style: const TextStyle(fontWeight: FontWeight.bold,color: Colors.purple,fontSize: 25.0),textAlign: TextAlign.center),
+            Text( userText.toString() +  " recuerda memorizar estas imagenes ",style: const TextStyle(fontWeight: FontWeight.bold,color: Colors.purple,fontSize: 25.0),textAlign: TextAlign.center),
             SizedBox(height: 60),
             Image.asset('images/'+ shuffledImages[currentIndex].image,height: 400,width: 400),
           ],
